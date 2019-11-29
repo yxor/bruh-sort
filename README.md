@@ -12,7 +12,7 @@ gcc sort.c -o sort -Wall -Werror
 gcc sleep.c -o sleep -Wall -Werror
 ```
 
-Then run the run the program with a list of integers aas arguments.
+Then run the run the program with a list of positive integers as arguments. (negative integers support coming soon)
 
 ```sh
 ./sort 9 8 7 6 5 3 4 1 2 0
