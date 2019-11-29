@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
+// this should be the path to the sleep binary
+#define SLEEP_PATH /root/bruh/sleep
+
 int main(int argc, char** argv){
     if(argc < 2)
     {
@@ -28,7 +31,7 @@ int main(int argc, char** argv){
                 fprintf(stderr, "fork failed");
                 exit(EXIT_FAILURE);
             case 0:
-                execl("/root/bruh/sleep", "sleep", argv[i], NULL);
+                execl(SLEEP_PATH, "sleep", argv[i], NULL);
         }
     }
 
