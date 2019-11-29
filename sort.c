@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 
 // this should be the path to the sleep binary
-#define SLEEP_PATH /root/bruh/sleep
+#define SLEEP_PATH "/root/bruh/sleep"
 
 int main(int argc, char** argv){
     if(argc < 2)
