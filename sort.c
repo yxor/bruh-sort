@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
+typedef unsigned int uint;
+
 // this should be the path to the sleep binary
 #define SLEEP_PATH "/root/bruh/sleep"
 
