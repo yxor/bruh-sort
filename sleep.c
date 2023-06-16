@@ -18,7 +18,7 @@ int main(uint argc, char** argv)
         fprintf(stderr, "wrong number of args");
         exit(EXIT_FAILURE);
     }
-    int sleeping_time = atoi(argv[1]);
+    uint sleeping_time = (uint)atoi(argv[1]);
     #if _WIN32
     Sleep(sleeping_time);
     #else
