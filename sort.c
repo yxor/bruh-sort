@@ -17,7 +17,7 @@ uint uabs(const int in){
 // this should be the path to the sleep binary
 #define SLEEP_PATH "/root/bruh/sleep"
 
-int main(uint argc, char** argv)
+int main(int argc, char** argv)
 {
     if(argc < 2)
     {
@@ -26,7 +26,7 @@ int main(uint argc, char** argv)
         exit(EXIT_FAILURE);
     }
     printf("unsorted array:\n");
-    const uint n = argc;
+    const uint n = (uint)argc;
     int min = atoi(argv[1]);
     const arr_len = n - 1;
     uint *arr = malloc(arr_len * sizeof(uint));
