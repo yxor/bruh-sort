@@ -11,21 +11,21 @@ typedef unsigned int uint;
 // this should be the path to the sleep binary
 #define SLEEP_PATH "/root/bruh/sleep"
 
-int main(int argc, char** argv){
+int main(uint argc, char** argv){
     if(argc < 2)
     {
         fprintf(stderr, "bruh");
         exit(EXIT_FAILURE);
     }
-    int n = argc;
+    uint n = argc;
     printf("unsorted array:\n");
-    for(int i = 1; i < n; i++)
+    for(uint i = 1; i < n; i++)
     {
         printf("%s ", argv[i]);
     }
     printf("\nsorted array:\n");
     //sorting time
-    for(int i = 1; i < n; i++)
+    for(uint i = 1; i < n; i++)
     {
         switch(fork())
         {
@@ -37,7 +37,7 @@ int main(int argc, char** argv){
         }
     }
 
-    for(int i = 1; i < n; i++)
+    for(uint i = 1; i < n; i++)
         wait(NULL);
     printf("\n");
     return 0;
