@@ -5,12 +5,13 @@
 #include <stdio.h>
 #if _WIN32
 #include <windows.h>
-#else 
+#else
 #include <unistd.h>
 #endif
 
+typedef unsigned int uint;
 
-int main(int argc, char** argv)
+int main(uint argc, char** argv)
 {
     if(argc < 2)
     {
