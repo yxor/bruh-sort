@@ -53,6 +53,8 @@ int main(int argc, char** argv)
                 execl(SLEEP_PATH, "sleep", itoa(arr[i] + offset), NULL);
         }
     }
+    free(arr);
+    arr = NULL;
 
     for(uint i = 1; i < n; i++)
         wait(NULL);
