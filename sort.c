@@ -8,24 +8,41 @@
 
 typedef unsigned int uint;
 
+/*Return the unsigned absolute value of X.*/
+uint uabs(const int in){
+    const uint out = (uint)in;
+    return in < 0 ? -out : out;
+}
+
 // this should be the path to the sleep binary
 #define SLEEP_PATH "/root/bruh/sleep"
 
-int main(uint argc, char** argv){
+int main(uint argc, char** argv)
+{
     if(argc < 2)
     {
+        //empty arrays are forbidden
         fprintf(stderr, "bruh");
         exit(EXIT_FAILURE);
     }
-    uint n = argc;
     printf("unsorted array:\n");
+    const uint n = argc;
+    int min = atoi(argv[1]);
+    const arr_len = n - 1;
+    uint *arr = malloc(arr_len * sizeof(uint));
     for(uint i = 1; i < n; i++)
     {
+        int tmp = atoi(argv[i]);
+        arr[i-1] = (uint)tmp;
+        //for negative support
+        if(tmp < min)
+            min = tmp;
         printf("%s ", argv[i]);
     }
+    const uint offset = uabs(min);
     printf("\nsorted array:\n");
     //sorting time
-    for(uint i = 1; i < n; i++)
+    for(uint i = 0; i < arr_len; i++)
     {
         switch(fork())
         {
@@ -33,7 +50,7 @@ int main(uint argc, char** argv){
                 fprintf(stderr, "fork failed");
                 exit(EXIT_FAILURE);
             case 0:
-                execl(SLEEP_PATH, "sleep", argv[i], NULL);
+                execl(SLEEP_PATH, "sleep", itoa(arr[i] + offset), NULL);
         }
     }
 
