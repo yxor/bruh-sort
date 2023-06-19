@@ -9,9 +9,9 @@
 #include <unistd.h>
 #endif
 
-int main(int argc, char** argv)
+int main(const int argc, const char** argv)
 {
-    if(argc < 2)
+    if(argc != 2)
     {
         fprintf(stderr, "wrong number of args");
         exit(EXIT_FAILURE);
