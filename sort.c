@@ -33,9 +33,6 @@ char* utoa(uint n)
     return s;
 };
 
-// this should be the path to the sleep binary
-#define SLEEP_PATH "/root/bruh/sleep"
-
 int main(int argc, char** argv)
 {
     const uint n = (uint)argc;
@@ -68,7 +65,7 @@ int main(int argc, char** argv)
                 fprintf(stderr, "fork failed");
                 exit(EXIT_FAILURE);
             case 0:
-                execl(SLEEP_PATH, "sleep", utoa(arr[i] + offset), NULL);
+                execl("./sleep", "sleep", utoa(arr[i] + offset), NULL);
         }
     }
     free(arr);
