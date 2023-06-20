@@ -9,6 +9,21 @@
 #include <unistd.h>
 #endif
 
+typedef unsigned int uint;
+
+//increases sorting accuracy
+const uint DELAY_FACTOR = 4;
+
+/* Sleep __miliseconds miliseconds, or until a signal arrives that is not blocked
+   or ignored.
+
+   This function is a cancellation point and therefore not marked with
+   __THROW.  */
+int msleep(int __miliseconds)
+{
+    return usleep(__miliseconds * 1000);
+};
+
 int main(const int argc, const char** argv)
 {
     if(argc != 2)
@@ -16,11 +31,11 @@ int main(const int argc, const char** argv)
         fprintf(stderr, "wrong number of args");
         exit(EXIT_FAILURE);
     }
-    int sleeping_time = atoi(argv[1]);
+    uint sleeping_time = (uint)(atoi(argv[1])) * DELAY_FACTOR;
     #if _WIN32
     Sleep(sleeping_time);
     #else
-    usleep(sleeping_time * 5000);
+    msleep(sleeping_time);
     #endif
     printf("%d ", sleeping_time);
     return 0;
