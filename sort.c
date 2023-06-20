@@ -8,11 +8,22 @@
 
 typedef unsigned int uint;
 
-//Return the unsigned absolute value of X.
-uint uabs(const int in){
-    const uint out = (uint)in;
-    return in < 0 ? -out : out;
-}
+//Swaps char pointed by `a` with the one pointed by `b`.
+//To use with strings, call iteratively.
+void swap_chars(char* a, char* b)
+{
+    char tmp = *a;
+    *a = *b;
+    *b = tmp;
+};
+
+//Reverse a string in-place.
+//len is the number of chars to reverse (excluding the NULL terminator).
+void strrev_in_place(char* s, const size_t len)
+{
+    for (size_t i; i < len/2; i++)
+        swap_chars(s+i, s+(len-1-i));
+};
 
 //Convert an unsigned integer to a decimal string.
 char* utoa(uint n)
@@ -30,6 +41,7 @@ char* utoa(uint n)
     };
     //just-in-case, because of static
     s[i]='\0';
+    strrev_in_place(s, i);
     return s;
 };
 
@@ -54,7 +66,7 @@ int main(int argc, char** argv)
             min = tmp;
         printf("%s ", argv[i]);
     }
-    const uint offset = uabs(min);
+    const uint offset = min < 0 ? -(uint)min : 0u;
     printf("\nsorted array:\n");
     //sorting time
     for(uint i = 0; i < arr_len; i++)
@@ -65,7 +77,10 @@ int main(int argc, char** argv)
                 fprintf(stderr, "fork failed");
                 exit(EXIT_FAILURE);
             case 0:
-                execl("./sleep", "sleep", utoa(arr[i] + offset), NULL);
+                execl(
+                    "./sleep", "sleep",
+                    utoa(arr[i] + offset), argv[i+1],
+                NULL);
         }
     }
     free(arr);

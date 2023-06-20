@@ -26,17 +26,17 @@ int msleep(int __miliseconds)
 
 int main(const int argc, const char** argv)
 {
-    if(argc != 2)
+    if(argc != 3)
     {
         fprintf(stderr, "wrong number of args");
         exit(EXIT_FAILURE);
     }
-    uint sleeping_time = (uint)(atoi(argv[1])) * DELAY_FACTOR;
+    const uint delay = (uint)(atoi(argv[1])) * DELAY_FACTOR;
     #if _WIN32
-    Sleep(sleeping_time);
+    Sleep(delay);
     #else
-    msleep(sleeping_time);
+    msleep(delay);
     #endif
-    printf("%d ", sleeping_time);
+    printf("%s ", argv[2]);
     return 0;
 }
