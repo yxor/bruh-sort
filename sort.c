@@ -22,12 +22,13 @@ char* utoa(uint n)
     u_int8_t i;
     //`(1<<32)-1` has 10 digits.
     //this will sometimes be a negligible "soft" memory-leak.
-    char s[11u];
+    static char s[11u];
     while (n > 0u)
     {
         s[i++] = '0' + (n % 10u);
         n /= 10u;
     };
+    //just-in-case, because of static
     s[i]='\0';
     return s;
 };
