@@ -1,15 +1,13 @@
 # bruh-sort
-Sorting algorithm using POSIX system calls
+Sorting algorithm using POSIX system calls. AKA "sleep-sort" and "lazy-sort".
 
 ## how does it work ?
 
 Compile using the gcc compiler 
 
 ```sh
-gcc sort.c -o sort -Wall -Werror
-```
-```sh
 gcc sleep.c -o sleep -Wall -Werror
+gcc sort.c -o sort -Wall -Werror
 ```
 
 Then, run the program with a list of unsigned integers as arguments. (negative integers support coming soon)
