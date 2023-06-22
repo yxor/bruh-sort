@@ -10,8 +10,8 @@ gcc sleep.c -o sleep -Wall -Werror
 gcc sort.c -o sort -Wall -Werror
 ```
 
-Then, run the program with a list of unsigned integers as arguments. (negative integers support coming soon)
+Then, run the program with a list of integers as arguments.
 
 ```sh
-./sort 9 8 7 6 5 3 4 1 2 0
+./sort 9 -8 7 6 -5 3 4 1 2 0
 ```
