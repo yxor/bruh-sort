@@ -21,7 +21,7 @@ void swap_chars(char* a, char* b)
 //len is the number of chars to reverse (excluding the NULL terminator).
 void strrev_in_place(char* s, const size_t len)
 {
-    for (size_t i; i < len/2; i++)
+    for (size_t i = 0u; i < len/2u; i++)
         swap_chars(s+i, s+(len-1-i));
 };
 
@@ -30,10 +30,10 @@ char* utoa(uint n)
 {
     if (n == 0u)
         return "0";
-    u_int8_t i;
     //`(1<<32)-1` has 10 digits.
-    //this will sometimes be a negligible "soft" memory-leak.
-    static char s[11u];
+    //this may sometimes be a negligible "soft" memory-leak.
+    static char s[11u]; //to-do: refactor fn to avoid mut static
+    u_int8_t i = 0u;
     while (n > 0u)
     {
         s[i++] = '0' + (n % 10u);
