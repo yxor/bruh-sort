@@ -9,30 +9,30 @@
 
 typedef unsigned int uint;
 
-// Swaps char pointed by `a` with the one pointed by `b`.
-// To use with strings, call iteratively.
+//Swaps char pointed by `a` with the one pointed by `b`.
+//To use with strings, call iteratively.
 void swap_chars(char* a, char* b)
 {
     char tmp = *a;
     *a = *b;
     *b = tmp;
-}
+};
 
-// Reverse a string in-place.
-// `len` is the number of chars to reverse (excluding `NULL` terminator).
+//Reverse a string in-place.
+//`len` is the number of chars to reverse (excluding `NULL` terminator).
 void strrev_in_place(char* s, const size_t len)
 {
     for (size_t i = 0u; i < len/2u; i++)
         swap_chars(s + i, s + (len-1 - i));
-}
+};
 
-// (decimal)
+//(decimal)
 const u_int8_t UINT32_MAX_DIGITS = 10u;
 const u_int8_t BUF_SIZE = UINT32_MAX_DIGITS + 1u;
 
-// Format uint32 to decimal string.
-// `s` is the buffer where the digits will be placed.
-// `s` will end with NULL, for convenience
+//Format uint32 to decimal string.
+//`s` is the buffer where the digits will be placed.
+//`s` will end with NULL, for convenience.
 void u32toa(u_int32_t n, char s[BUF_SIZE])
 {
     u_int8_t i = 0u;
@@ -45,9 +45,9 @@ void u32toa(u_int32_t n, char s[BUF_SIZE])
             // convert to big-endian
             strrev_in_place(s, i);
             return;
-        }
-    }
-}
+        };
+    };
+};
 
 int main(const int argc, const char** argv)
 {
@@ -56,7 +56,7 @@ int main(const int argc, const char** argv)
     {
         fprintf(stderr, "bruh");
         exit(EXIT_FAILURE);
-    }
+    };
     printf("unsorted array:\n");
     int min = atoi(argv[1]);
     const uint arr_len = n - 1u;
@@ -65,12 +65,11 @@ int main(const int argc, const char** argv)
     {
         int tmp = atoi(argv[i]);
         arr[i-1] = (uint)tmp;
-        // for negative support
+        //support negatives
         if(tmp < min)
-            // clamp
-            min = tmp;
+            min = tmp; //clamp
         printf("%s ", argv[i]);
-    }
+    };
     const uint offset = min < 0 ? -(uint)min : 0u;
     printf("\nsorted array:\n");
     // sorting time
@@ -89,8 +88,8 @@ int main(const int argc, const char** argv)
                     s, argv[i+1],
                 NULL);
             }
-        }
-    }
+        };
+    };
     free(arr);
     // "safety"
     arr = NULL;
