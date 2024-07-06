@@ -72,7 +72,7 @@ int main(const int argc, const char** argv)
     };
     const uint offset = min < 0 ? -(uint)min : 0u;
     printf("\nsorted array:\n");
-    // sorting time
+    //sorting time
     for(uint i = 0; i < arr_len; i++)
     {
         switch(fork())
