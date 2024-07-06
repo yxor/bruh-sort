@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <sys/fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -8,44 +9,47 @@
 
 typedef unsigned int uint;
 
-//Swaps char pointed by `a` with the one pointed by `b`.
-//To use with strings, call iteratively.
+// Swaps char pointed by `a` with the one pointed by `b`.
+// To use with strings, call iteratively.
 void swap_chars(char* a, char* b)
 {
     char tmp = *a;
     *a = *b;
     *b = tmp;
-};
+}
 
-//Reverse a string in-place.
-//len is the number of chars to reverse (excluding the NULL terminator).
+// Reverse a string in-place.
+// `len` is the number of chars to reverse (excluding `NULL` terminator).
 void strrev_in_place(char* s, const size_t len)
 {
     for (size_t i = 0u; i < len/2u; i++)
-        swap_chars(s+i, s+(len-1-i));
-};
+        swap_chars(s + i, s + (len-1 - i));
+}
 
-//Convert an unsigned integer to a decimal string.
-char* utoa(uint n)
+// (decimal)
+const u_int8_t UINT32_MAX_DIGITS = 10u;
+const u_int8_t BUF_SIZE = UINT32_MAX_DIGITS + 1u;
+
+// Format uint32 to decimal string.
+// `s` is the buffer where the digits will be placed.
+// `s` will end with NULL, for convenience
+void u32toa(u_int32_t n, char s[BUF_SIZE])
 {
-    if (n == 0u)
-        return "0";
-    //`(1<<32)-1` has 10 digits.
-    //this may sometimes be a negligible "soft" memory-leak.
-    static char s[11u]; //to-do: refactor fn to avoid mut static
     u_int8_t i = 0u;
-    while (n > 0u)
+    while(1)
     {
         s[i++] = '0' + (n % 10u);
-        n /= 10u;
-    };
-    //just-in-case, because of static
-    s[i]='\0';
-    strrev_in_place(s, i);
-    return s;
-};
+        if ((n /= 10u) == 0u)
+        {
+            s[i] = '\0';
+            // convert to big-endian
+            strrev_in_place(s, i);
+            return;
+        }
+    }
+}
 
-int main(int argc, char** argv)
+int main(const int argc, const char** argv)
 {
     const uint n = (uint)argc;
     if(n < 2u)
@@ -56,19 +60,20 @@ int main(int argc, char** argv)
     printf("unsorted array:\n");
     int min = atoi(argv[1]);
     const uint arr_len = n - 1u;
-    uint *arr = malloc(arr_len * sizeof(uint));
+    u_int32_t* arr = malloc(arr_len * sizeof(u_int32_t));
     for(uint i = 1; i < n; i++)
     {
         int tmp = atoi(argv[i]);
         arr[i-1] = (uint)tmp;
-        //for negative support
+        // for negative support
         if(tmp < min)
+            // clamp
             min = tmp;
         printf("%s ", argv[i]);
     }
     const uint offset = min < 0 ? -(uint)min : 0u;
     printf("\nsorted array:\n");
-    //sorting time
+    // sorting time
     for(uint i = 0; i < arr_len; i++)
     {
         switch(fork())
@@ -76,14 +81,18 @@ int main(int argc, char** argv)
             case -1:
                 fprintf(stderr, "fork failed");
                 exit(EXIT_FAILURE);
-            case 0:
+            case 0: {
+                char s[BUF_SIZE];
+                u32toa(arr[i] + offset, s);
                 execl(
                     "./sleep", "sleep",
-                    utoa(arr[i] + offset), argv[i+1],
+                    s, argv[i+1],
                 NULL);
+            }
         }
     }
     free(arr);
+    // "safety"
     arr = NULL;
 
     for(uint i = 1; i < n; i++)
