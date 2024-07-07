@@ -31,22 +31,18 @@ const u_int8_t UINT32_MAX_DIGITS = 10u;
 const u_int8_t BUF_SIZE = UINT32_MAX_DIGITS + 1u;
 
 //Format uint32 to decimal string.
-//`s` is the buffer where the digits will be placed.
-//`s` will end with NULL, for convenience.
-void u32toa(u_int32_t n, char s[BUF_SIZE])
+//`s` is the `len >= BUF_SIZE` buffer where digits will be placed.
+//returns len of `s`, for potential performance.
+u_int8_t u32toa(u_int32_t n, char* s)
 {
     u_int8_t i = 0u;
-    while(1)
-    {
-        s[i++] = '0' + (n % 10u);
-        if ((n /= 10u) == 0u)
-        {
-            s[i] = '\0';
-            // convert to big-endian
-            strrev_in_place(s, i);
-            return;
-        };
-    };
+    do s[i++] = '0' + (n % 10u);
+    while ((n /= 10u) != 0u);
+
+    s[i] = '\0';
+    // convert to big-endian
+    strrev_in_place(s, i);
+    return i;
 };
 
 int main(const int argc, const char** argv)
